@@ -1,7 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:delivery_rider_app/constants/constants.dart';
 import 'package:delivery_rider_app/components/complete_delivery_component.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import '../components/raw_material_button.dart';
 import 'delivery_order_details.dart';
 
@@ -13,6 +14,18 @@ class CompleteDeliveries extends StatefulWidget {
 }
 
 class _CompleteDeliveriesState extends State<CompleteDeliveries> {
+
+  void openPhone(String phone) async {
+    Uri phoneno = Uri.parse('tel:$phone');
+    if(await canLaunchUrl(phoneno)){
+      await launchUrl(phoneno);
+    }else {
+      if (kDebugMode) {
+        print('Cannot make call');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +40,7 @@ class _CompleteDeliveriesState extends State<CompleteDeliveries> {
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-            const Expanded(
+            Expanded(
               child: CompleteDeliveryComponent(
                 orderID: '3',
                 deliveryStatus: 'Complete',
@@ -47,27 +60,43 @@ class _CompleteDeliveriesState extends State<CompleteDeliveries> {
                     child: MyRawMaterialButton(
                       text: 'View',
                       icon: Icons.remove_red_eye_outlined,
-                      onPressed: DeliveryOrderDetails(),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const DeliveryOrderDetails(),
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10.0,
                   ),
                   Expanded(
                     child: MyRawMaterialButton(
                       text: 'Call',
                       icon: Icons.call,
-                      onPressed: DeliveryOrderDetails(),
+                      onPressed:() async {
+                        openPhone('075342436');
+                      },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10.0,
                   ),
                   Expanded(
                     child: MyRawMaterialButton(
                       text: 'Map',
                       icon: Icons.my_location,
-                      onPressed: DeliveryOrderDetails(),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const DeliveryOrderDetails(),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -83,7 +112,7 @@ class _CompleteDeliveriesState extends State<CompleteDeliveries> {
                 ),
               ),
             ),
-            const Expanded(
+            Expanded(
               child: CompleteDeliveryComponent(
                 orderID: '4',
                 deliveryStatus: 'Complete',
@@ -103,27 +132,43 @@ class _CompleteDeliveriesState extends State<CompleteDeliveries> {
                     child: MyRawMaterialButton(
                       text: 'View',
                       icon: Icons.remove_red_eye_outlined,
-                      onPressed: DeliveryOrderDetails(),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const DeliveryOrderDetails(),
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10.0,
                   ),
                   Expanded(
                     child: MyRawMaterialButton(
                       text: 'Call',
                       icon: Icons.call,
-                      onPressed: DeliveryOrderDetails(),
+                      onPressed: () async {
+                        openPhone('075342436');
+                      },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10.0,
                   ),
                   Expanded(
                     child: MyRawMaterialButton(
                       text: 'Map',
                       icon: Icons.my_location,
-                      onPressed: DeliveryOrderDetails(),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const DeliveryOrderDetails(),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -139,7 +184,7 @@ class _CompleteDeliveriesState extends State<CompleteDeliveries> {
                 ),
               ),
             ),
-            const Expanded(
+            Expanded(
               child: CompleteDeliveryComponent(
                 orderID: '5',
                 deliveryStatus: 'Complete',
@@ -159,27 +204,43 @@ class _CompleteDeliveriesState extends State<CompleteDeliveries> {
                     child: MyRawMaterialButton(
                       text: 'View',
                       icon: Icons.remove_red_eye_outlined,
-                      onPressed: DeliveryOrderDetails(),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const DeliveryOrderDetails(),
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10.0,
                   ),
                   Expanded(
                     child: MyRawMaterialButton(
                       text: 'Call',
                       icon: Icons.call,
-                      onPressed: DeliveryOrderDetails(),
+                      onPressed: () async {
+                        openPhone('075342436');
+                      },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10.0,
                   ),
                   Expanded(
                     child: MyRawMaterialButton(
                       text: 'Map',
                       icon: Icons.my_location,
-                      onPressed: DeliveryOrderDetails(),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const DeliveryOrderDetails(),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
