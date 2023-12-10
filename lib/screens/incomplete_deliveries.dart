@@ -162,11 +162,18 @@ class _IncompleteDeliveriesState extends State<IncompleteDeliveries> {
                   const SizedBox(
                     width: 10.0,
                   ),
-                  const Expanded(
+                  Expanded(
                     child: MyRawMaterialButton(
                       text: 'View',
                       icon: Icons.remove_red_eye_outlined,
-                      onPressed: DeliveryOrderDetails(),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const DeliveryOrderDetails(),
+                          ),
+                        );
+                      },
                     ),
                   ),
                   const SizedBox(
