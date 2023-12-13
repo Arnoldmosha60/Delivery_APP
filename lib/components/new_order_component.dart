@@ -7,7 +7,11 @@ import 'material_icon_button.dart';
 
 class NewOrderComponent extends StatelessWidget {
   const NewOrderComponent({
-    super.key, required this.orderID, required this.name, required this.location, required this.orderArrivalTime,
+    super.key,
+    required this.orderID,
+    required this.name,
+    required this.location,
+    required this.orderArrivalTime,
   });
 
   final String orderID;
@@ -59,8 +63,7 @@ class NewOrderComponent extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                left: 15.0, bottom: 5.0),
+            padding: const EdgeInsets.only(left: 15.0, bottom: 5.0),
             child: Row(
               children: [
                 const Text(
@@ -112,27 +115,41 @@ class NewOrderComponent extends StatelessWidget {
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(
-                left: 15.0, right: 15.0, bottom: 5.0),
+          Padding(
+            padding:
+                const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 5.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
                   child: MaterialIconButton(
                     text: 'Accept',
-                    onPressed: DeliveryOrderDetails(),
-                    icon: Icon(Icons.done),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DeliveryOrderDetails(),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.done),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20.0,
                 ),
                 Expanded(
                   child: MaterialIconButton(
                     text: 'Reject',
-                    onPressed: DialogBox(),
-                    icon: Icon(Icons.close),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DialogBox(),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.close),
                   ),
                 ),
               ],
@@ -143,5 +160,3 @@ class NewOrderComponent extends StatelessWidget {
     );
   }
 }
-
-

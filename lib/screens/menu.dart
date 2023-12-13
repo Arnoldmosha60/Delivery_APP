@@ -1,9 +1,7 @@
+import 'package:delivery_rider_app/screens/deliveries.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:delivery_rider_app/constants/constants.dart';
-import '../components/drawer_component.dart';
-import '../components/new_order_component.dart';
-import 'delivery_order_details.dart';
 import 'delivery_order_history.dart';
 import 'home_page.dart';
 
@@ -20,19 +18,13 @@ class _MenuPageState extends State<MenuPage> {
 
   final List<Widget> _screens = [
     const HomePage(),
-    const DeliveryOrderDetails(),
+    const Deliveries(),
     const DeliveryHistory(),
   ];
 
   void onTap(int index) {
     setState(() {
       _selectedIndex = index;
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => _screens[_selectedIndex],
-      //   ),
-      // );
     });
   }
 

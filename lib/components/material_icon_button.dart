@@ -18,10 +18,7 @@ class MaterialIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      onPressed:() { Navigator.push(
-          context,
-        MaterialPageRoute(builder: (context) => onPressed ),
-      ); },
+      onPressed: onPressed,
       elevation: 0.0,
       constraints: const BoxConstraints.tightFor(
         width: 110.0,
