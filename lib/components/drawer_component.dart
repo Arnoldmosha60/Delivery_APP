@@ -1,193 +1,224 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:delivery_rider_app/constants/constants.dart';
 
-import '../screens/complete_deliveries.dart';
-import '../screens/delivery_order_history.dart';
-import '../screens/incomplete_deliveries.dart';
-import '../screens/rider_account_page.dart';
+String imagePath = 'images/img.png';
 
-class DrawerComponent extends StatelessWidget {
-  const DrawerComponent({
-    super.key,
-    required int selectedIndex,
-  }) : _selectedIndex = selectedIndex;
+class DrawerComponent extends StatefulWidget {
+  const DrawerComponent({super.key});
 
-  final int _selectedIndex;
 
   @override
+  State<DrawerComponent> createState() => _DrawerComponentState();
+}
+
+class _DrawerComponentState extends State<DrawerComponent> {
+  
+  
+  @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: kBackgroundColor,
+    return SafeArea(
+      child: Drawer(
+        child: ListView(
+          padding: const EdgeInsets.only(top: 90.0, left: 10.0),
+          children: [
+            ListTile(
+              title: SizedBox(
+                height: 80,
+                width: 80,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  fit: StackFit.expand,
+                  children: [
+                    const CircleAvatar(
+                      child: Center(
+                        child: Image(
+                          image: AssetImage(
+                            'images/img.png',
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: RawMaterialButton(
+                          onPressed: () {
+                            if (kDebugMode) {
+                              print('Camera clicked',);
+                            }
+                          },
+                          elevation: 1.0,
+                          fillColor: const Color(0xFFF5F6F9),
+                          shape: const CircleBorder(),
+                          child: const Icon(
+                            Icons.camera_alt_outlined,
+                            color: kBackgroundColor,
+                          ),
+                        )),
+                  ],
+                ),
+              ),
             ),
-            child: Text(
-              'Rider App',
-              style: kTextStyle1,
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0, bottom: 10.0),
+              child: SizedBox(
+                height: 10.0,
+                width: 5.0,
+                child: Divider(
+                  color: Colors.teal[100],
+                ),
+              ),
             ),
-          ),
-          ListTile(
-            title: const Row(
-              children: [
-                Icon(
-                  Icons.dashboard,
+            ListTile(
+              title: TextButton(
+                onPressed: () {
+                  if (kDebugMode) {
+                    print('object');
+                  }
+                },
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.person,
+                      size: 25.0,
+                    ),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      'Username',
+                      style: TextStyle(
+                          fontSize: 25.0, fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Text(
-                  'Dashboard',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                  ),
-                ),
-              ],
+              ),
             ),
-            selected: _selectedIndex == 0,
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            title: const Row(
-              children: [
-                Icon(
-                  Icons.done,
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Text(
-                  'Complete Deliveries',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                  ),
-                ),
-              ],
+            const SizedBox(
+              height: 5.0,
             ),
-            selected: _selectedIndex == 1,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const CompleteDeliveries(),
+            ListTile(
+              title: TextButton(
+                onPressed: () {
+                  if (kDebugMode) {
+                    print('logout');
+                  }
+                },
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.email,
+                      size: 25.0,
+                    ),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      '****@gmail.com',
+                      style: TextStyle(
+                          fontSize: 25.0, fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-              );
-            },
-          ),
-          ListTile(
-            title: const Row(
-              children: [
-                Icon(
-                  Icons.pending_outlined,
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Text(
-                  'Pending Deliveries',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                  ),
-                ),
-              ],
+              ),
             ),
-            selected: _selectedIndex == 2,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const IncompleteDeliveries(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            title: const Row(
-              children: [
-                Icon(
-                  Icons.history,
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Text(
-                  'History',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                  ),
-                ),
-              ],
+            const SizedBox(
+              height: 5.0,
             ),
-            selected: _selectedIndex == 2,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const DeliveryHistory(),
+            ListTile(
+              title: TextButton(
+                onPressed: () {
+                  if (kDebugMode) {
+                    print('logout');
+                  }
+                },
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.phone,
+                      size: 25.0,
+                    ),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      '+255 **** *****',
+                      style: TextStyle(
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-              );
-            },
-          ),
-          ListTile(
-            title: const Row(
-              children: [
-                Icon(
-                  Icons.account_circle,
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Text(
-                  'Account',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                  ),
-                ),
-              ],
+              ),
             ),
-            selected: _selectedIndex == 2,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const RiderProfile(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            title: const Row(
-              children: [
-                Icon(
-                  Icons.logout,
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Text(
-                  'Logout',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                  ),
-                ),
-              ],
+            const SizedBox(
+              height: 5.0,
             ),
-            selected: _selectedIndex == 2,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const RiderProfile(),
+            ListTile(
+              title: TextButton(
+                onPressed: () {
+                  if (kDebugMode) {
+                    print('logout');
+                  }
+                },
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.location_on,
+                      size: 25.0,
+                    ),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      'Kimara',
+                      style: TextStyle(
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-              );
-            },
-          ),
-        ],
+              ),
+            ),
+            const SizedBox(
+              height: 5.0,
+            ),
+            ListTile(
+              title: TextButton(
+                onPressed: () {
+                  if (kDebugMode) {
+                    print('logout');
+                  }
+                },
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.logout,
+                      size: 25.0,
+                    ),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      'Logout',
+                      style: TextStyle(
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
+
+

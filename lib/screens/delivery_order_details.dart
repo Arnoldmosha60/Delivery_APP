@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:delivery_rider_app/constants/constants.dart';
+import '../components/drawer_component.dart';
 
 class DeliveryOrderDetails extends StatefulWidget {
   const DeliveryOrderDetails({super.key});
@@ -9,9 +10,11 @@ class DeliveryOrderDetails extends StatefulWidget {
 }
 
 class _DeliveryOrderDetailsState extends State<DeliveryOrderDetails> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DrawerComponent(),
       appBar: AppBar(
         backgroundColor: kBackgroundColor,
         title: const Text(

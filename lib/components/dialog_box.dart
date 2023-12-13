@@ -1,5 +1,5 @@
 import 'package:delivery_rider_app/constants/constants.dart';
-import 'package:delivery_rider_app/screens/incomplete_deliveries.dart';
+import 'package:delivery_rider_app/screens/home_page.dart';
 import 'package:flutter/material.dart';
 
 class DialogBox extends StatefulWidget {
@@ -37,7 +37,7 @@ class _DialogBoxState extends State<DialogBox> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const IncompleteDeliveries(),
+                    builder: (context) => const HomePage(),
                   ),
                 );
               },

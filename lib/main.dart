@@ -1,3 +1,4 @@
+import 'package:delivery_rider_app/screens/menu.dart';
 import 'package:flutter/material.dart';
 import 'screens/home_page.dart';
 import 'constants/constants.dart';
@@ -15,7 +16,7 @@ class DeliveryApp extends StatelessWidget {
       theme: ThemeData.light().copyWith(
         primaryColor: kBackgroundColor,
       ),
-      home: const HomePage(),
+      home: const MenuPage(),
     );
   }
 }
