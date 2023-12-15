@@ -220,10 +220,10 @@ packages:
     dependency: transitive
     description:
       name: http
-      sha256: "759d1a329847dd0f39226c688d3e06a6b8679668e350e2891a6474f8b4bb8525"
+      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "0.13.6"
   http_parser:
     dependency: transitive
     description:
@@ -416,14 +416,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.7"
-  responsive_navigation_bar:
-    dependency: "direct main"
-    description:
-      name: responsive_navigation_bar
-      sha256: d1ee45efd95b5f55b3b26308762d40ce2ddfc66b359d8308e85aeb71073767e9
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.4"
   sky_engine:
     dependency: transitive
     description: flutter

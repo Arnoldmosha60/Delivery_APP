@@ -1,22 +1,36 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
+import 'dart:io';
+
+import 'package:delivery_rider_app/screens/loginPage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:delivery_rider_app/constants/constants.dart';
+import 'package:image_picker/image_picker.dart';
 
 String imagePath = 'images/img.png';
 
 class DrawerComponent extends StatefulWidget {
   const DrawerComponent({super.key});
 
-
   @override
   State<DrawerComponent> createState() => _DrawerComponentState();
 }
 
 class _DrawerComponentState extends State<DrawerComponent> {
-  
-  
+  File? _imageFile;
+
   @override
   Widget build(BuildContext context) {
+    Future<void> _pickImage() async {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+      setState(() {
+        _imageFile = pickedFile != null ? File(pickedFile.path) : null;
+      });
+    }
+
     return SafeArea(
       child: Drawer(
         child: ListView(
@@ -30,23 +44,17 @@ class _DrawerComponentState extends State<DrawerComponent> {
                   clipBehavior: Clip.none,
                   fit: StackFit.expand,
                   children: [
-                    const CircleAvatar(
-                      child: Center(
-                        child: Image(
-                          image: AssetImage(
-                            'images/img.png',
-                          ),
-                        ),
-                      ),
+                    CircleAvatar(
+                      radius: 50.0,
+                      backgroundImage:
+                          _imageFile != null ? FileImage(_imageFile!) : null,
                     ),
                     Positioned(
                         bottom: 0,
-                        right: 0,
+                        right: -25,
                         child: RawMaterialButton(
                           onPressed: () {
-                            if (kDebugMode) {
-                              print('Camera clicked',);
-                            }
+                            _pickImage();
                           },
                           elevation: 1.0,
                           fillColor: const Color(0xFFF5F6F9),
@@ -189,9 +197,12 @@ class _DrawerComponentState extends State<DrawerComponent> {
             ListTile(
               title: TextButton(
                 onPressed: () {
-                  if (kDebugMode) {
-                    print('logout');
-                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    ),
+                  );
                 },
                 child: const Row(
                   children: [
@@ -219,6 +230,3 @@ class _DrawerComponentState extends State<DrawerComponent> {
     );
   }
 }
-
-
-

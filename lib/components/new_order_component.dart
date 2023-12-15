@@ -142,12 +142,7 @@ class NewOrderComponent extends StatelessWidget {
                   child: MaterialIconButton(
                     text: 'Reject',
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const DialogBox(),
-                        ),
-                      );
+                      _showDialog(context);
                     },
                     icon: const Icon(Icons.close),
                   ),
@@ -157,6 +152,34 @@ class NewOrderComponent extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Alert!!'),
+          content: const Text('Are you sure you want to cancel the order?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                // Close the dialog
+                Navigator.of(context).pop();
+              },
+              child: const Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Close the dialog
+                Navigator.of(context).pop();
+              },
+              child: const Text('No'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
