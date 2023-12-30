@@ -1,5 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:delivery_rider_app/screens/menu.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'signupPage.dart';
 import 'package:delivery_rider_app/constants/constants.dart';
 
@@ -11,6 +15,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  final _auth = FirebaseAuth.instance;
+  String? errorMessage;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,6 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                 Column(
                   children: <Widget>[
                     TextField(
+                      controller: emailController,
                       decoration: InputDecoration(
                           hintText: "Email",
                           border: OutlineInputBorder(
@@ -58,6 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 20),
                     TextField(
+                      controller: passwordController,
                       decoration: InputDecoration(
                         hintText: "Password",
                         border: OutlineInputBorder(
@@ -75,12 +85,14 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.only(top: 3, left: 3),
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MenuPage(),
-                          ),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const MenuPage(),
+                        //   ),
+                        // );
+
+                        signIn(emailController.text, passwordController.text);
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
@@ -162,5 +174,47 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void signIn(String email, String password) async {
+    CircularProgressIndicator();
+    try {
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((uid) => {
+                Fluttertoast.showToast(msg: "Successful connection"),
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => MenuPage(),
+                  ),
+                ),
+              });
+    } on FirebaseAuthException catch (error) {
+      switch (error.code) {
+        case "invalid-email":
+          errorMessage = "Your email address appears to be malformed.";
+
+          break;
+        case "wrong-password":
+          errorMessage = "Your password is wrong.";
+          break;
+        case "user-not-found":
+          errorMessage = "The user with this email does not exist.";
+          break;
+        case "user-disabled":
+          errorMessage = "The user with this email has been deactivated.";
+          break;
+        case "too-many-requests":
+          errorMessage = "Too many requests";
+          break;
+        case "operation-not-allowed":
+          errorMessage = "Login with email and password is not enabled.";
+          break;
+        default:
+          errorMessage = "An undefined error has occurred.";
+      }
+      Fluttertoast.showToast(msg: errorMessage!);
+      print(error.code);
+    }
   }
 }

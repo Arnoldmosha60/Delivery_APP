@@ -1,6 +1,12 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivery_rider_app/authentication/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'loginPage.dart';
 import 'package:delivery_rider_app/constants/constants.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -10,6 +16,13 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController cpasswordController = TextEditingController();
+
+  final _auth = FirebaseAuth.instance;
+  String? errorMessage;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -46,6 +59,7 @@ class _SignupPageState extends State<SignupPage> {
                 Column(
                   children: <Widget>[
                     TextField(
+                      controller: usernameController,
                       decoration: InputDecoration(
                           hintText: "Username",
                           border: OutlineInputBorder(
@@ -57,6 +71,7 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     const SizedBox(height: 20),
                     TextField(
+                      controller: emailController,
                       decoration: InputDecoration(
                           hintText: "Email",
                           border: OutlineInputBorder(
@@ -68,6 +83,7 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     const SizedBox(height: 20),
                     TextField(
+                      controller: passwordController,
                       decoration: InputDecoration(
                         hintText: "Password",
                         border: OutlineInputBorder(
@@ -81,6 +97,7 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     const SizedBox(height: 20),
                     TextField(
+                      controller: cpasswordController,
                       decoration: InputDecoration(
                         hintText: "Confirm Password",
                         border: OutlineInputBorder(
@@ -97,7 +114,9 @@ class _SignupPageState extends State<SignupPage> {
                 Container(
                     padding: const EdgeInsets.only(top: 3, left: 3),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        signUp(emailController.text, passwordController.text);
+                      },
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
                         padding: const EdgeInsets.symmetric(vertical: 16),
@@ -179,5 +198,80 @@ class _SignupPageState extends State<SignupPage> {
         ),
       ),
     );
+  }
+
+  void signUp(String email, String password) async {
+    try {
+      await _auth
+          .createUserWithEmailAndPassword(
+              email: emailController.text.trim(),
+              password: passwordController.text.trim())
+          .then((uid) => {
+                // Fluttertoast.showToast(msg: "Successful connection"),
+                postDetailsToFirestore(),
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const LoginPage(),
+                  ),
+                ),
+              });
+    } on FirebaseAuthException catch (error) {
+      switch (error.code) {
+        case "invalid-email":
+          errorMessage = "Your email address appears to be malformed.";
+
+          break;
+        case "wrong-password":
+          errorMessage = "Your password is wrong.";
+          break;
+        case "The email address is already in use by another account":
+          errorMessage =
+              "The email address is already in use by another account.";
+          break;
+        case "user-not-found":
+          errorMessage = "The user with this email does not exist.";
+          break;
+        case "user-disabled":
+          errorMessage = "The user with this email has been deactivated.";
+          break;
+        case "too-many-requests":
+          errorMessage = "Too many requests";
+          break;
+        case "operation-not-allowed":
+          errorMessage = "Login with email and password is not enabled.";
+          break;
+        default:
+          errorMessage = "An undefined error has occurred.";
+      }
+      print(errorMessage);
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text(errorMessage!),
+      //     duration: Duration(seconds: 1),
+      //   ),
+      // );
+      Fluttertoast.showToast(msg: errorMessage!);
+    }
+  }
+
+  postDetailsToFirestore() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+    UserModel userModel = UserModel();
+
+    // writing all the values to our model
+
+    userModel.email = user!.email;
+    userModel.uid = user.uid;
+    userModel.name = usernameController.text;
+    userModel.password = passwordController.text;
+    // userModel.localisation = dropdownValue;
+
+    await firebaseFirestore
+        .collection("Users")
+        .doc(user.uid)
+        .set(userModel.toMap());
+
+    // Fluttertoast.showToast(msg: "Account created successfully :)");
   }
 }

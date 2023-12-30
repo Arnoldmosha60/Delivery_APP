@@ -1,8 +1,9 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: no_leading_underscores_for_local_identifiers, use_build_context_synchronously
 
 import 'dart:io';
 
 import 'package:delivery_rider_app/screens/loginPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:delivery_rider_app/constants/constants.dart';
@@ -166,7 +167,8 @@ class _DrawerComponentState extends State<DrawerComponent> {
             ),
             ListTile(
               title: TextButton(
-                onPressed: () {
+                onPressed: () async {
+                  FirebaseAuth.instance.signOut();
                   if (kDebugMode) {
                     print('logout');
                   }
@@ -196,7 +198,9 @@ class _DrawerComponentState extends State<DrawerComponent> {
             ),
             ListTile(
               title: TextButton(
-                onPressed: () {
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
